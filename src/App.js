@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import Counter from './components/Counter'
 
-function App() {
+const colors = ['#6699cc', '#ba553c', '#acbf3e', '#9363a9', '#329fa3', '#e2c655']
+
+function App () {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Counter backgroundColor={colors[0]} foregroundColor="#ffffff" id={0}/>
+      <Counter backgroundColor={colors[1]} foregroundColor="#ffffff" id={1}/>
+      <Counter backgroundColor={colors[2]} foregroundColor="#ffffff" id={2}/>
+      <Counter backgroundColor={colors[3]} foregroundColor="#ffffff" id={3}/>
+      <Counter backgroundColor={colors[4]} foregroundColor="#ffffff" id={4}/>
+      <Counter backgroundColor={colors[5]} foregroundColor="#ffffff" id={5}/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
