@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import Counter from './components/Counter'
 
-const colors = ['#6699cc', '#ba553c', '#acbf3e', '#9363a9', '#329fa3', '#e2c655']
+const colors = ['#6699cc', '#ba553c', '#acbf3e', '#9363a9', '#329fa3', '#d3af56']
 
 function App () {
   return (

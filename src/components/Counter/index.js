@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Button from './Button'
 import Number from './Number'
 import { IoIosRemove, IoIosAdd } from 'react-icons/io'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
+import Name from './Name'
 
 function Counter ({ id, backgroundColor, foregroundColor }) {
   const [count, setCount] = useLocalStorage(`'counter:${id}'`, 0)
+  const [name, setName] = useLocalStorage(`'name:${id}'`, `Player ${id + 1}`)
 
   const handleRemove = () => {
     setCount(count - 1)
@@ -17,58 +20,31 @@ function Counter ({ id, backgroundColor, foregroundColor }) {
 
   return (
     <Container backgroundColor={backgroundColor} foregroundColor={foregroundColor}>
-      <Button onPress={handleRemove}><IoIosRemove/></Button>
-      <Number>{count}</Number>
-      <Button onPress={handleAdd}><IoIosAdd/></Button>
+      <Row>
+        <Name name={name} onChange={setName}/>
+      </Row>
+
+      <Row>
+        <Button onPress={handleRemove}><IoIosRemove/></Button>
+        <Number value={count} onChange={setCount}/>
+        <Button onPress={handleAdd}><IoIosAdd/></Button>
+      </Row>
     </Container>
   )
 }
 
-function useLocalStorage(key, initialValue) {
-  // State to store our value
-  // Pass initial state function to useState so logic is only executed once
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      // Get from local storage by key
-      const item = window.localStorage.getItem(key);
-      // Parse stored json or if none return initialValue
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      // If error also return initialValue
-      console.log(error);
-      return initialValue;
-    }
-  });
-
-  // Return a wrapped version of useState's setter function that ...
-  // ... persists the new value to localStorage.
-  const setValue = value => {
-    try {
-      // Allow value to be a function so we have same API as useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-      // Save state
-      setStoredValue(valueToStore);
-      // Save to local storage
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
-    } catch (error) {
-      // A more advanced implementation would handle the error case
-      console.log(error);
-    }
-  };
-
-  return [storedValue, setValue];
-}
-
 const Container = styled.div`
   user-select: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  padding: 32px 80px;
+  padding: 32px 32px;
   margin-bottom: 1px;
   ${({ backgroundColor }) => `background-color: ${backgroundColor};`}
   ${({ foregroundColor }) => `color: ${foregroundColor};`}
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 `
 
 export default Counter
